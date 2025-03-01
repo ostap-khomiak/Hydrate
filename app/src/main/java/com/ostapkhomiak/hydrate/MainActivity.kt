@@ -19,10 +19,10 @@ class MainActivity : AppCompatActivity() {
             field = value
         }
 
-    var amount: Int = 2500;
+    var amount: Int = 2500
 
 
-
+    // TODO: add viewmodel to share data between fragments and MAINACTIVITY.
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
