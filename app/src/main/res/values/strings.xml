@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Hydrate</string>
+    <string name="Today">TODAY</string>
+    <string name="History">HISTORY</string>
+    <string name="Settings">SETTINGS</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
