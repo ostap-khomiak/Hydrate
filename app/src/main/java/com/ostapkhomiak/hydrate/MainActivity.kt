@@ -14,6 +14,9 @@ class MainActivity : AppCompatActivity() {
     lateinit var todayBtn : Button
     lateinit var historyBtn : Button
     lateinit var settingsBtn : Button
+    var weight: Double = 65.0
+    var amount: Int = 2500;
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,13 +37,16 @@ class MainActivity : AppCompatActivity() {
         val settingsFragment = SettingsFragment()
 
         todayBtn.setOnClickListener { changeFragment(mainFragment) }
-        historyBtn.setOnClickListener { changeFragment(historyFragment)}
+        historyBtn.setOnClickListener { changeFragment(historyFragment) }
         settingsBtn.setOnClickListener { changeFragment(settingsFragment) }
 
 
 
     }
 
+    public fun setWeight(weight: Double){
+        this.weight = weight
+    }
     fun changeFragment(fragment: Fragment){
         val ft = supportFragmentManager.beginTransaction()
         ft.replace(R.id.fragmentContainerView, fragment)
