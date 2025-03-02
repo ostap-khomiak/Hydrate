@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment
 
 class MainActivity : AppCompatActivity() {
 
-    private val settingsViewModel: ShareViewModel by viewModels()
+    private val shareViewModel: ShareViewModel by viewModels()
 
     lateinit var todayBtn : Button
     lateinit var historyBtn : Button
