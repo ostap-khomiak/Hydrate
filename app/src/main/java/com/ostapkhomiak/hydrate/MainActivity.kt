@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.activity.viewModels
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
@@ -11,15 +12,12 @@ import androidx.fragment.app.Fragment
 
 class MainActivity : AppCompatActivity() {
 
+    private val settingsViewModel: ShareViewModel by viewModels()
+
     lateinit var todayBtn : Button
     lateinit var historyBtn : Button
     lateinit var settingsBtn : Button
-    var weight: Double = 65.0
-        set(value) {
-            field = value
-        }
 
-    var amount: Int = 2500
 
 
     // TODO: add viewmodel to share data between fragments and MAINACTIVITY.
