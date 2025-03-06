@@ -48,7 +48,7 @@ class SettingsFragment : Fragment() {
         }
 
         shareViewModel.isManualAmount.observe(viewLifecycleOwner) {
-            if(shareViewModel.getIsManualAmount() == true){
+            if (shareViewModel.getIsManualAmount() == true) {
                 manualWaterText.setVisibility(View.VISIBLE)
             } else {
                 manualWaterText.setVisibility(View.INVISIBLE)
@@ -69,15 +69,7 @@ class SettingsFragment : Fragment() {
         // Update ViewModel
         weightEditText.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                if (shareViewModel.getIsWeightInLB() == true) {
-                    shareViewModel.setWeight(
-                        weightEditText.text.toString().toDouble() / 2.2
-                    )
-                } else {
-                    shareViewModel.setWeight(
-                        weightEditText.text.toString().toDoubleOrNull() ?: 66.0
-                    )
-                }
+                shareViewModel.setWeight(weightEditText.text.toString().toDoubleOrNull() ?: 66.0)
             }
         }
 

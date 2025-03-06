@@ -12,7 +12,7 @@ class ShareViewModel : ViewModel() {
     val isWeightInLB = MutableLiveData<Boolean>().apply { value = false }
     val isManualAmount = MutableLiveData<Boolean>().apply { value = false }
     val manualAmount = MutableLiveData<Int>().apply { value = 3000 }
-    val consumedWater = MutableLiveData<Int>()
+    val consumedWater = MutableLiveData<Int>().apply { value = 0}
 
 
     fun setWeight(newWeight: Double) {
@@ -64,7 +64,7 @@ class ShareViewModel : ViewModel() {
     }
 
 
-    fun addToConsumedWater(drinkedWater: Int) {
+    fun addConsumedWater(drinkedWater: Int) {
         consumedWater.value = consumedWater.value?.plus(drinkedWater)
     }
 
