@@ -19,12 +19,13 @@ class SettingsFragment : Fragment() {
     override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         requireActivity().setTheme(R.style.Theme_Hydrate)
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
-
         val weightEditText = view.findViewById<EditText>(R.id.editWeightTextNumber)
         val manualWaterText = view.findViewById<EditText>(R.id.manualWaterTextNumber)
+        manualWaterText.setVisibility(View.INVISIBLE)
         val disableCalcCheckBox = view.findViewById<CheckBox>(R.id.disableCalcCheckBox)
         val kglbswitch = view.findViewById<Switch>(R.id.kglbswitch)
         kglbswitch.setText("KG")
+
 
         // Observe ViewModel
         shareViewModel.weight.observe(viewLifecycleOwner) { weight ->
@@ -34,6 +35,7 @@ class SettingsFragment : Fragment() {
         shareViewModel.amount.observe(viewLifecycleOwner) { amount ->
             manualWaterText.setText(amount.toString())
         }
+
         shareViewModel.weightInLB.observe(viewLifecycleOwner){ weightInLB ->
             if(weightInLB){
                 kglbswitch.setText("LB")
@@ -46,7 +48,11 @@ class SettingsFragment : Fragment() {
         // Update ViewModel
         weightEditText.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                shareViewModel.setWeight(weightEditText.text.toString().toDoubleOrNull() ?: 65.0)
+                if(shareViewModel.getWeightInLB() == true){
+                    shareViewModel.setWeight(weightEditText.text.toString().toDouble() / 2.2)
+                } else {
+                    shareViewModel.setWeight(weightEditText.text.toString().toDoubleOrNull() ?: 65.0)
+                }
             }
         }
 
@@ -58,6 +64,15 @@ class SettingsFragment : Fragment() {
 
         kglbswitch.setOnClickListener {
             shareViewModel.setWeightInLB(kglbswitch.isChecked)
+        }
+
+        disableCalcCheckBox.setOnClickListener{
+            shareViewModel.setManualAmount(disableCalcCheckBox.isChecked)
+            if (shareViewModel.getManualAmount() == true){
+                manualWaterText.setVisibility(View.VISIBLE)
+            } else {
+                manualWaterText.setVisibility(View.INVISIBLE)
+            }
         }
 
         return view
