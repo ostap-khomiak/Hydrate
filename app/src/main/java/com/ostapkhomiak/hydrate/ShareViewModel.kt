@@ -29,7 +29,7 @@ class ShareViewModel : ViewModel() {
 
     fun updateCalculatedAmount() {
 
-        if (isWeightInLB.value == true) {
+        if (isWeightInLB.value!!) {
             calculatedAmount.value = (weight.value?.div(22)?.toInt()?.times(1000))
         } else {
             calculatedAmount.value = (weight.value?.div(48)?.toInt()?.times(1000))

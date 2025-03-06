@@ -41,14 +41,14 @@ class SettingsFragment : Fragment() {
             weightEditText.setText(weight.toString())
         }
 
-        if (shareViewModel.getIsManualAmount() == true) {
+        if (shareViewModel.getIsManualAmount()!!) {
             shareViewModel.manualAmount.observe(viewLifecycleOwner) { amount ->
                 manualWaterText.setText(amount.toString())
             }
         }
 
         shareViewModel.isManualAmount.observe(viewLifecycleOwner) {
-            if (shareViewModel.getIsManualAmount() == true) {
+            if (shareViewModel.getIsManualAmount()!!) {
                 manualWaterText.setVisibility(View.VISIBLE)
             } else {
                 manualWaterText.setVisibility(View.INVISIBLE)
