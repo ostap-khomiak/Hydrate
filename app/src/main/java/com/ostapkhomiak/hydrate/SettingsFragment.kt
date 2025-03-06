@@ -16,13 +16,22 @@ class SettingsFragment : Fragment() {
     private val shareViewModel: ShareViewModel by activityViewModels()
 
 
-    override fun onCreateView( inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+
+
         requireActivity().setTheme(R.style.Theme_Hydrate)
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
+
         val weightEditText = view.findViewById<EditText>(R.id.editWeightTextNumber)
-        val manualWaterText = view.findViewById<EditText>(R.id.manualWaterTextNumber)
-        manualWaterText.setVisibility(View.INVISIBLE)
+        weightEditText.setText(shareViewModel.getWeight().toString())
+
         val disableCalcCheckBox = view.findViewById<CheckBox>(R.id.disableCalcCheckBox)
+        val manualWaterText = view.findViewById<EditText>(R.id.manualWaterTextNumber)
+
         val kglbswitch = view.findViewById<Switch>(R.id.kglbswitch)
         kglbswitch.setText("KG")
 
@@ -32,47 +41,61 @@ class SettingsFragment : Fragment() {
             weightEditText.setText(weight.toString())
         }
 
-        shareViewModel.amount.observe(viewLifecycleOwner) { amount ->
-            manualWaterText.setText(amount.toString())
+        if (shareViewModel.getIsManualAmount() == true) {
+            shareViewModel.manualAmount.observe(viewLifecycleOwner) { amount ->
+                manualWaterText.setText(amount.toString())
+            }
         }
 
-        shareViewModel.weightInLB.observe(viewLifecycleOwner){ weightInLB ->
-            if(weightInLB){
+        shareViewModel.isManualAmount.observe(viewLifecycleOwner) {
+            if(shareViewModel.getIsManualAmount() == true){
+                manualWaterText.setVisibility(View.VISIBLE)
+            } else {
+                manualWaterText.setVisibility(View.INVISIBLE)
+            }
+        }
+
+
+        shareViewModel.isWeightInLB.observe(viewLifecycleOwner) { weightInLB ->
+            if (weightInLB) {
                 kglbswitch.setText("LB")
             } else {
                 kglbswitch.setText("KG")
             }
+
         }
 
 
         // Update ViewModel
         weightEditText.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                if(shareViewModel.getWeightInLB() == true){
-                    shareViewModel.setWeight(weightEditText.text.toString().toDouble() / 2.2)
+                if (shareViewModel.getIsWeightInLB() == true) {
+                    shareViewModel.setWeight(
+                        weightEditText.text.toString().toDouble() / 2.2
+                    )
                 } else {
-                    shareViewModel.setWeight(weightEditText.text.toString().toDoubleOrNull() ?: 65.0)
+                    shareViewModel.setWeight(
+                        weightEditText.text.toString().toDoubleOrNull() ?: 66.0
+                    )
                 }
             }
         }
 
         manualWaterText.setOnFocusChangeListener { _, hasFocus ->
             if (!hasFocus) {
-                shareViewModel.setAmount(manualWaterText.text.toString().toIntOrNull() ?: 2500)
+                shareViewModel.setManualAmount(
+                    manualWaterText.text.toString().toIntOrNull() ?: 3000
+                )
             }
         }
 
         kglbswitch.setOnClickListener {
-            shareViewModel.setWeightInLB(kglbswitch.isChecked)
+            shareViewModel.setIsWeightInLB(kglbswitch.isChecked)
         }
 
-        disableCalcCheckBox.setOnClickListener{
-            shareViewModel.setManualAmount(disableCalcCheckBox.isChecked)
-            if (shareViewModel.getManualAmount() == true){
-                manualWaterText.setVisibility(View.VISIBLE)
-            } else {
-                manualWaterText.setVisibility(View.INVISIBLE)
-            }
+        disableCalcCheckBox.setOnClickListener {
+            shareViewModel.setIsManualAmount(disableCalcCheckBox.isChecked)
+            shareViewModel.updateCalculatedAmount()
         }
 
         return view

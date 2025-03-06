@@ -5,44 +5,69 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class ShareViewModel : ViewModel() {
-    val weight = MutableLiveData<Double>().apply { value = 65.0 }
-    val amount = MutableLiveData<Int>().apply { value = 2500 }
-    val weightInLB = MutableLiveData<Boolean>().apply { value = false }
-    val manualAmount = MutableLiveData<Boolean>().apply { value = false }
+
+    val weight = MutableLiveData<Double>().apply { value = 66.0 }
+    val calculatedAmount =
+        MutableLiveData<Int>().apply { value = (weight.value?.div(22)?.toInt()?.times(1000)) }
+    val isWeightInLB = MutableLiveData<Boolean>().apply { value = false }
+    val isManualAmount = MutableLiveData<Boolean>().apply { value = false }
+    val manualAmount = MutableLiveData<Int>().apply { value = 3000 }
     val consumedWater = MutableLiveData<Int>()
 
 
     fun setWeight(newWeight: Double) {
         weight.value = newWeight
     }
-    fun getWeight(): Double?{
+
+    fun getWeight(): Double? {
         return weight.value
     }
 
-    fun setAmount(newAmount: Int) {
-        amount.value = newAmount
-    }
-    fun getAmount(): Int? {
-        return amount.value
+    fun getCalculatedAmount(): Int? {
+        return calculatedAmount.value
     }
 
-    fun setWeightInLB(newWeightInLB: Boolean){
-        weightInLB.value = newWeightInLB
-    }
-    fun getWeightInLB(): Boolean? {
-        return weightInLB.value
+    fun updateCalculatedAmount() {
+
+        if (isWeightInLB.value == true) {
+            calculatedAmount.value = (weight.value?.div(22)?.toInt()?.times(1000))
+        } else {
+            calculatedAmount.value = (weight.value?.div(48)?.toInt()?.times(1000))
+        }
     }
 
-    fun setManualAmount(newManualAmount: Boolean) {
-        manualAmount.value = newManualAmount
+
+    fun setIsWeightInLB(newWeightInLB: Boolean) {
+        isWeightInLB.value = newWeightInLB
     }
-    fun getManualAmount(): Boolean? {
+
+    fun getIsWeightInLB(): Boolean? {
+        return isWeightInLB.value
+    }
+
+
+    fun setIsManualAmount(newManualAmount: Boolean) {
+        isManualAmount.value = newManualAmount
+    }
+
+    fun getIsManualAmount(): Boolean? {
+        return isManualAmount.value
+    }
+
+
+    fun setManualAmount(newAmount: Int) {
+        manualAmount.value = newAmount
+    }
+
+    fun getManualAmount(): Int? {
         return manualAmount.value
     }
 
-    fun setConsumedWater(newConsumedWater: Int){
-        consumedWater.value = newConsumedWater
+
+    fun addToConsumedWater(drinkedWater: Int) {
+        consumedWater.value = consumedWater.value?.plus(drinkedWater)
     }
+
     fun getConsumedWater(): Int? {
         return consumedWater.value
     }
