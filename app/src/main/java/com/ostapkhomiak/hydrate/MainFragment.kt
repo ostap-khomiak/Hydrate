@@ -47,6 +47,7 @@ class MainFragment : Fragment() {
 
 
 
+
         // Observe ViewModel
 
         shareViewModel.manualAmount.observe(viewLifecycleOwner) {
