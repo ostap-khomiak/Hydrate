@@ -92,9 +92,8 @@
             android:clickable="false"
             android:contentDescription="@string/app_name"
             android:fontFamily="@font/narnoor_medium"
+            android:text="@string/app_name"
             android:textSize="20sp"
-            android:text= "@string/app_name"
-            android:textColor="@android:color/black"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/IconView"
             app:layout_constraintTop_toTopOf="parent" />

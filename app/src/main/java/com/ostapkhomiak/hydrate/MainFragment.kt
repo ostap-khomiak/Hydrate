@@ -60,7 +60,6 @@ class MainFragment : Fragment() {
 
 
 
-
         // Observe ViewModel
 
         shareViewModel.manualAmount.observe(viewLifecycleOwner) {
@@ -74,19 +73,6 @@ class MainFragment : Fragment() {
         shareViewModel.consumedWater.observe(viewLifecycleOwner) {
             updateProgress()
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
