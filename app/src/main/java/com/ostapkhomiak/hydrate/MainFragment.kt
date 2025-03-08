@@ -39,7 +39,7 @@ class MainFragment : Fragment() {
         ConfirmWater = view.findViewById(R.id.ConfirmWater)
         editTextNumber = view.findViewById(R.id.editTextNumber)
         ConfirmWater?.setOnClickListener {
-            shareViewModel.addConsumedWater(editTextNumber?.text.toString().toInt())
+            shareViewModel.addConsumedWater(editTextNumber?.text.toString().toIntOrNull() ?: 0)
         }
 
         val smallMLBtn = view.findViewById<Button>(R.id.smallMLBtn)
