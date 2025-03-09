@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
 
@@ -20,6 +21,7 @@ class MainFragment : Fragment() {
     var percentageTextView: TextView? = null
     var ConfirmWater: Button? = null
     var editTextNumber: EditText? = null
+    var progressBar3: ProgressBar? = null
 
 
 
@@ -36,6 +38,7 @@ class MainFragment : Fragment() {
         goalTextView = view.findViewById(R.id.GoalTextView)
         progressTextView = view.findViewById(R.id.ProgressTextView)
         percentageTextView = view.findViewById(R.id.PercentageTextView)
+        progressBar3 = view.findViewById(R.id.progressBar3)
         ConfirmWater = view.findViewById(R.id.ConfirmWater)
         editTextNumber = view.findViewById(R.id.editTextNumber)
         ConfirmWater?.setOnClickListener {
@@ -86,8 +89,8 @@ class MainFragment : Fragment() {
             percentageTextView?.setText("${shareViewModel.getConsumedWater()?.times(100)?.div(shareViewModel.getManualAmount()!!)}%")
         } else {
             percentageTextView?.setText("${shareViewModel.getConsumedWater()?.times(100)?.div(shareViewModel.getCalculatedAmount()!!)}%")
-
         }
+        progressBar3?.setProgress(shareViewModel.getConsumedWater()!!, true)
     }
 
     fun updateGoal() {
