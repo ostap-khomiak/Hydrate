@@ -14,7 +14,6 @@ Hydrate is a simple Android app built to help users track their daily water inta
 
 ## 🛠️ Technologies Used
 - Kotlin
-- Android Jetpack
 - SharedPreferences
 - Material Design Components
 - Gson for JSON serialization
