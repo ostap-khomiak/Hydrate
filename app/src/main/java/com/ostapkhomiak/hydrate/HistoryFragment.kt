@@ -22,7 +22,7 @@ class HistoryFragment : Fragment() {
 
         historyManager = HistoryManager(requireContext())
         val historyList = historyManager.loadHistory()
-        historyList.reverse() // newest on intake on top
+        historyList.reverse() // newest intake on top
 
         historyAdapter = HistoryAdapter(historyList)
         recyclerView.adapter = historyAdapter

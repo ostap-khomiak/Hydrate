@@ -39,12 +39,12 @@
             android:id="@+id/disableCalcCheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="32dp"
             android:text="Disable Automatic calculation"
             android:textColorLink="@color/blue"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/editWeightTextNumber" />
+            app:layout_constraintTop_toBottomOf="@+id/notificationsCheckBox" />
 
         <EditText
             android:id="@+id/manualWaterTextNumber"
@@ -69,5 +69,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <CheckBox
+            android:id="@+id/notificationsCheckBox"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:text="Enable Notifications"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editWeightTextNumber" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

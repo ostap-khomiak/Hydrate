@@ -1,5 +1,6 @@
 package com.ostapkhomiak.hydrate
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -26,6 +27,7 @@ class SettingsFragment : Fragment() {
         requireActivity().setTheme(R.style.Theme_Hydrate)
         val view = inflater.inflate(R.layout.fragment_settings, container, false)
 
+        // ids
         val weightEditText = view.findViewById<EditText>(R.id.editWeightTextNumber)
         weightEditText.setText(shareViewModel.getWeight().toString())
 
@@ -34,6 +36,10 @@ class SettingsFragment : Fragment() {
 
         val kglbswitch = view.findViewById<Switch>(R.id.kglbswitch)
         kglbswitch.setText("KG")
+
+        val notificationsCheckBox = view.findViewById<CheckBox>(R.id.notificationsCheckBox)
+        notificationsCheckBox.isChecked = shareViewModel.getIsNotificationEnabled() ?: true
+
 
 
         // Observe ViewModel
@@ -55,15 +61,18 @@ class SettingsFragment : Fragment() {
             }
         }
 
-
         shareViewModel.isWeightInLB.observe(viewLifecycleOwner) { weightInLB ->
             if (weightInLB) {
                 kglbswitch.setText("LB")
             } else {
                 kglbswitch.setText("KG")
             }
-
         }
+
+        shareViewModel.isNotificationEnabled.observe(viewLifecycleOwner) {
+            notificationsCheckBox.isChecked = it
+        }
+
 
 
         // Update ViewModel
@@ -88,6 +97,16 @@ class SettingsFragment : Fragment() {
         disableCalcCheckBox.setOnClickListener {
             shareViewModel.setIsManualAmount(disableCalcCheckBox.isChecked)
             shareViewModel.updateCalculatedAmount()
+        }
+
+        notificationsCheckBox.setOnClickListener {
+            shareViewModel.setIsNotificationEnabled(notificationsCheckBox.isChecked)
+            // Save preference
+            val prefs = requireContext().getSharedPreferences("daily_prefs", Context.MODE_PRIVATE)
+            prefs.edit().putBoolean("notifications_enabled", notificationsCheckBox.isChecked).apply()
+
+            // Trigger scheduling/canceling
+            (activity as MainActivity).handleNotificationToggle(notificationsCheckBox.isChecked)
         }
 
         return view

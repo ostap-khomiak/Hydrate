@@ -25,8 +25,6 @@ class MainFragment : Fragment() {
     var progressBar3: ProgressBar? = null
 
 
-
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -36,6 +34,8 @@ class MainFragment : Fragment() {
         requireActivity().setTheme(R.style.Theme_Hydrate)
         val view = inflater.inflate(R.layout.fragment_main, container, false)
 
+
+        // ids
         goalTextView = view.findViewById(R.id.GoalTextView)
         progressTextView = view.findViewById(R.id.ProgressTextView)
         percentageTextView = view.findViewById(R.id.PercentageTextView)
@@ -43,9 +43,14 @@ class MainFragment : Fragment() {
         ConfirmWater = view.findViewById(R.id.ConfirmWater)
         editTextNumber = view.findViewById(R.id.editTextNumber)
 
+        // listeners
+
         ConfirmWater?.setOnClickListener {
             val addedAmount = editTextNumber?.text.toString().toIntOrNull() ?: 0
-            waterButtonsListener(addedAmount)
+            if (addedAmount > 0){
+                waterButtonsListener(addedAmount)
+            }
+
         }
 
         val smallMLBtn = view.findViewById<Button>(R.id.smallMLBtn)

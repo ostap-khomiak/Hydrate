@@ -29,6 +29,9 @@ class ShareViewModel(application: Application) : AndroidViewModel(application) {
     val consumedWater = MutableLiveData<Int>().apply {
         value = sharedPreferences.getInt("consumedWater", 0)
     }
+    val isNotificationEnabled = MutableLiveData<Boolean>().apply {
+        value = sharedPreferences.getBoolean("isNotificationEnabled", true)
+    }
 
 
     fun setWeight(newWeight: Double) {
@@ -92,6 +95,20 @@ class ShareViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getConsumedWater(): Int? {
         return consumedWater.value
+    }
+
+    fun resetConsumedWater(){
+        consumedWater.value = 0
+        sharedPreferences.edit().putInt("consumedWater", 0).apply()
+    }
+
+    fun setIsNotificationEnabled(enabled: Boolean) {
+        isNotificationEnabled.value = enabled
+        sharedPreferences.edit().putBoolean("isNotificationEnabled", enabled).apply()
+    }
+
+    fun getIsNotificationEnabled(): Boolean? {
+        return isNotificationEnabled.value
     }
 
 }
