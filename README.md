@@ -22,6 +22,8 @@ Hydrate is a simple Android app built to help users track their daily water inta
 
 ## 📷 Screenshots
 
+![Dark Theme](https://github.com/user-attachments/assets/f0d34d16-330b-437b-a8d9-7df0cda05063)
+
 
 ### 💡 Credits
 Made by Ostap Khomiak
