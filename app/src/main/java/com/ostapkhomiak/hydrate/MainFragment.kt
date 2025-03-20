@@ -10,7 +10,8 @@ import android.widget.EditText
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.activityViewModels
-
+import java.text.SimpleDateFormat
+import java.util.*
 
 class MainFragment : Fragment() {
 
@@ -41,25 +42,26 @@ class MainFragment : Fragment() {
         progressBar3 = view.findViewById(R.id.progressBar3)
         ConfirmWater = view.findViewById(R.id.ConfirmWater)
         editTextNumber = view.findViewById(R.id.editTextNumber)
+
         ConfirmWater?.setOnClickListener {
-            shareViewModel.addConsumedWater(editTextNumber?.text.toString().toIntOrNull() ?: 0)
+            val addedAmount = editTextNumber?.text.toString().toIntOrNull() ?: 0
+            waterButtonsListener(addedAmount)
         }
 
         val smallMLBtn = view.findViewById<Button>(R.id.smallMLBtn)
         smallMLBtn.setOnClickListener {
-            shareViewModel.addConsumedWater(100)
+            waterButtonsListener(100)
         }
 
         val mediumMLBtn = view.findViewById<Button>(R.id.mediumMLBtn)
         mediumMLBtn.setOnClickListener {
-            shareViewModel.addConsumedWater(200)
+            waterButtonsListener(200)
         }
 
         val largeMLBtn = view.findViewById<Button>(R.id.largeMLBtn)
         largeMLBtn.setOnClickListener {
-            shareViewModel.addConsumedWater(300)
+            waterButtonsListener(300)
         }
-
 
 
 
@@ -102,6 +104,42 @@ class MainFragment : Fragment() {
         }
         goalTextView?.setText("of " + goalAmount + "ml goal")
 
+    }
+
+    fun waterButtonsListener(amount: Int) {
+        shareViewModel.addConsumedWater(amount)
+        saveToHistory(amount)
+    }
+
+    fun saveToHistory(amount: Int) {
+        val historyManager = HistoryManager(requireContext())
+        val currentHistory = historyManager.loadHistory()
+
+        val sdfDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val sdfTime = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val date = sdfDate.format(Date())
+        val time = sdfTime.format(Date())
+
+        // replace icon based on amount
+        val iconId = when {
+            amount < 200 -> R.drawable.drop
+            amount in 200..399 -> R.drawable.glass_of_water
+            else -> R.drawable.water_bottle
+        }
+
+        val entry = WaterIntakeEntry(
+            iconId = iconId,
+            amount = amount,
+            time = time,
+            date = date
+        )
+
+        if (currentHistory.size >= 8) {
+            currentHistory.removeAt(0) // remove oldest
+        }
+
+        currentHistory.add(entry)
+        historyManager.saveHistory(currentHistory)
     }
 
 }

@@ -7,6 +7,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 
 
+
 class ShareViewModel(application: Application) : AndroidViewModel(application) {
     private val sharedPreferences = application.getSharedPreferences("hydrate_pref", Context.MODE_PRIVATE)
 
