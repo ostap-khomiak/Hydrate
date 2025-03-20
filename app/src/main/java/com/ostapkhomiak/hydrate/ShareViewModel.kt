@@ -15,7 +15,9 @@ class ShareViewModel(application: Application) : AndroidViewModel(application) {
         value = sharedPreferences.getFloat("weight", 66f).toDouble()
     }
     val calculatedAmount = MutableLiveData<Int>().apply {
-        value = weight.value?.div(22)?.toInt()?.times(1000)?.let { sharedPreferences.getInt("calculatedAmount", it) }
+        val temp = (weight.value!! / 22).toInt() * 1000
+        value = temp
+        sharedPreferences.getInt("calculatedAmount", temp)
     }
     val isWeightInLB = MutableLiveData<Boolean>().apply {
         value = sharedPreferences.getBoolean("isWeightInLB", false)
@@ -37,6 +39,7 @@ class ShareViewModel(application: Application) : AndroidViewModel(application) {
     fun setWeight(newWeight: Double) {
         weight.value = newWeight
         sharedPreferences.edit().putFloat("weight", newWeight.toFloat()).apply()
+        updateCalculatedAmount()
     }
 
     fun getWeight(): Double? {
@@ -50,9 +53,9 @@ class ShareViewModel(application: Application) : AndroidViewModel(application) {
     fun updateCalculatedAmount() {
 
         if (isWeightInLB.value!!) {
-            calculatedAmount.value = (weight.value?.div(22)?.toInt()?.times(1000))
+            calculatedAmount.value = (weight.value!! / 22 * 1000).toInt()  // TODO: fix ml calculation
         } else {
-            calculatedAmount.value = (weight.value?.div(48)?.toInt()?.times(1000))
+            calculatedAmount.value = (weight.value!! / 48 * 1000).toInt()
         }
         sharedPreferences.edit().putInt("calculatedAmount", calculatedAmount.value!!).apply()
     }
@@ -110,5 +113,6 @@ class ShareViewModel(application: Application) : AndroidViewModel(application) {
     fun getIsNotificationEnabled(): Boolean? {
         return isNotificationEnabled.value
     }
+
 
 }

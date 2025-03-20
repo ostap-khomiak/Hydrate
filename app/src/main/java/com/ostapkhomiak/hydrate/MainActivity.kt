@@ -1,5 +1,6 @@
 package com.ostapkhomiak.hydrate
 
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -103,12 +104,16 @@ class MainActivity : AppCompatActivity() {
             editor.apply()
 
 
-            shareViewModel.resetConsumedWater()
-
-            // Clear history
-            val historyManager = HistoryManager(this)
-            historyManager.saveHistory(emptyList())
+            resetProgress(prefs)
         }
+    }
+
+    fun resetProgress(prefs : SharedPreferences = getSharedPreferences("daily_prefs", MODE_PRIVATE)) {
+        shareViewModel.resetConsumedWater()
+
+        // Clear history
+        val historyManager = HistoryManager(this)
+        historyManager.saveHistory(emptyList())
     }
 
     fun handleNotificationToggle(enabled: Boolean) {

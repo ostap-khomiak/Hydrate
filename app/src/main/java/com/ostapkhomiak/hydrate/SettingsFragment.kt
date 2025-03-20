@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import android.widget.EditText
@@ -31,6 +32,7 @@ class SettingsFragment : Fragment() {
         val weightEditText = view.findViewById<EditText>(R.id.editWeightTextNumber)
         weightEditText.setText(shareViewModel.getWeight().toString())
 
+
         val disableCalcCheckBox = view.findViewById<CheckBox>(R.id.disableCalcCheckBox)
         val manualWaterText = view.findViewById<EditText>(R.id.manualWaterTextNumber)
 
@@ -39,6 +41,8 @@ class SettingsFragment : Fragment() {
 
         val notificationsCheckBox = view.findViewById<CheckBox>(R.id.notificationsCheckBox)
         notificationsCheckBox.isChecked = shareViewModel.getIsNotificationEnabled() ?: true
+
+        val deleteButton = view.findViewById<Button>(R.id.deleteButton)
 
 
 
@@ -107,6 +111,10 @@ class SettingsFragment : Fragment() {
 
             // Trigger scheduling/canceling
             (activity as MainActivity).handleNotificationToggle(notificationsCheckBox.isChecked)
+        }
+
+        deleteButton.setOnClickListener {
+            (activity as MainActivity).resetProgress()
         }
 
         return view

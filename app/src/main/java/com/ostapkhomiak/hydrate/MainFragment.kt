@@ -53,7 +53,7 @@ class MainFragment : Fragment() {
 
         }
 
-        val smallMLBtn = view.findViewById<Button>(R.id.smallMLBtn)
+        val smallMLBtn = view.findViewById<Button>(R.id.deleteButton)
         smallMLBtn.setOnClickListener {
             waterButtonsListener(100)
         }
@@ -104,8 +104,10 @@ class MainFragment : Fragment() {
 
         if (shareViewModel.getIsManualAmount() == true) {
             goalAmount = shareViewModel.getManualAmount()!!
+            progressBar3!!.max = shareViewModel.getManualAmount()!!
         } else {
             goalAmount = shareViewModel.getCalculatedAmount()!!
+            progressBar3!!.max = shareViewModel.getCalculatedAmount()!!
         }
         goalTextView?.setText("of " + goalAmount + "ml goal")
 
